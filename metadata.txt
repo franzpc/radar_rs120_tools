@@ -1,0 +1,26 @@
+[general]
+name=Radar RS120 Tools
+qgisMinimumVersion=3.24
+description=Herramientas para convertir archivos NetCDF del radar meteorológico RS120 a GeoTIFF y GIF
+version=1.0
+author=Franz Pucha Cofrep
+email=fapucha@utpl.edu.ec
+
+about=Este plugin convierte archivos NetCDF del radar meteorológico RS120 a diferentes formatos, incluyendo:
+    - GeoTIFF con reproyección a WGS84 Zona 17S (EPSG:32717)
+    - GIF animado para visualización con mapa base de OpenStreetMap.
+    
+    Características principales:
+    * Conversión a GeoTIFF:
+      - Reproyección automática a WGS84 UTM Zona 17S
+      - Umbral personalizable para valores NoData (por defecto 25 dBZ)
+      - Aplicación automática de paleta de colores para visualización de precipitación
+    
+    * Creación de GIF animado:
+      - Umbral personalizable para transparencia (por defecto 30 dBZ)
+      - Incorporación opcional de mapa base de OpenStreetMap
+      - Velocidad de animación ajustable
+      - Título personalizable
+
+tracker=https://github.com/franzpc/radar_rs120_tools/issues
+repository=https://github.com/franzpc/radar_rs120_tools
