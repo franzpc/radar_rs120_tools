@@ -1,14 +1,15 @@
 [general]
 name=Radar RS120 Tools
-qgisMinimumVersion=3.24
-description=Herramientas para convertir archivos NetCDF del radar meteorológico RS120 a GeoTIFF y GIF
+qgisMinimumVersion=3.34
+description=Herramientas para procesamiento y análisis de datos del radar meteorológico RS120
 version=1.0
-author=Franz Pucha Cofrep
+author=UTPL
 email=fapucha@utpl.edu.ec
-
-about=Este plugin convierte archivos NetCDF del radar meteorológico RS120 a diferentes formatos, incluyendo:
-    - GeoTIFF con reproyección a WGS84 Zona 17S (EPSG:32717)
-    - GIF animado para visualización con mapa base de OpenStreetMap.
+about=Este plugin proporciona un conjunto completo de herramientas para procesar y analizar datos del radar meteorológico RS120, incluyendo:
+    - Conversión a GeoTIFF con reproyección a WGS84 Zona 17S (EPSG:32717)
+    - Creación de GIF animado para visualización con mapa base de OpenStreetMap
+    - Análisis de series temporales con operaciones estadísticas (suma, media, máximo, mínimo)
+    - Calibración de reflectividad a precipitación utilizando estaciones meteorológicas
     
     Características principales:
     * Conversión a GeoTIFF:
@@ -21,6 +22,22 @@ about=Este plugin convierte archivos NetCDF del radar meteorológico RS120 a dif
       - Incorporación opcional de mapa base de OpenStreetMap
       - Velocidad de animación ajustable
       - Título personalizable
-
+    
+    * Series Temporales:
+      - Análisis de intervalos temporales definidos por el usuario
+      - Operaciones disponibles: suma, media, máximo y mínimo
+      - Ajuste automático de zona horaria (UTC a hora local)
+      - Umbral personalizable para valores NoData
+    
+    * Calibración a Precipitación:
+      - Integración de datos de estaciones meteorológicas con datos de radar
+      - Algoritmo de calibración basado en técnicas de interpolación espacial
+      - Consideración de efectos de elevación usando Modelos Digitales de Elevación (DEM)
+      - Generación de mapas de precipitación calibrados en milímetros (mm)
+      - Múltiples métodos de interpolación disponibles:
+      - IDW (Inverse Distance Weighting) - método predeterminado
+      - Linear, Cubic, Nearest (basados en SciPy)
+      - Ordinary Kriging y Universal Kriging (requieren la biblioteca PyKrige)
 tracker=https://github.com/franzpc/radar_rs120_tools/issues
 repository=https://github.com/franzpc/radar_rs120_tools
+homepage=https://github.com/franzpc/radar_rs120_tools
