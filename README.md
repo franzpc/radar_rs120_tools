@@ -4,10 +4,12 @@ Plugin de QGIS que proporciona herramientas para procesar y visualizar datos del
 
 ## Descripción
 
-Este plugin convierte archivos NetCDF del radar meteorológico RS120 a diferentes formatos:
+Este plugin convierte archivos NetCDF del radar meteorológico RS120 a diferentes formatos y ofrece funcionalidades para análisis de datos:
 
 - **GeoTIFF**: Conversión a formato GeoTIFF con reproyección a WGS84 UTM Zona 17S (EPSG:32717)
 - **GIF Animado**: Generación de animaciones a partir de series temporales de archivos NetCDF
+- **Series Temporales**: Análisis de series temporales con operaciones estadísticas (suma, media, máximo, mínimo)
+- **Calibración a Precipitación**: Calibra datos de reflectividad de radar a valores de precipitación (mm) usando estaciones meteorológicas
 
 ## Características principales
 
@@ -26,6 +28,22 @@ Este plugin convierte archivos NetCDF del radar meteorológico RS120 a diferente
 - Título personalizable
 - Procesamiento por lotes de directorios con múltiples archivos NetCDF
 
+### Series Temporales
+
+- Análisis de datos de radar en intervalos temporales definidos por el usuario
+- Operaciones disponibles: suma, media, máximo y mínimo
+- Ajuste automático de zona horaria (UTC a hora local)
+- Umbral personalizable para valores NoData
+- Generación de imágenes acumuladas o promedios para períodos específicos
+
+### Calibración a Precipitación
+
+- Integración de datos de estaciones meteorológicas con datos de radar
+- Algoritmo de calibración basado en técnicas de interpolación espacial
+- Consideración de efectos de elevación usando Modelos Digitales de Elevación (DEM)
+- Generación de mapas de precipitación calibrados en milímetros (mm)
+- Múltiples métodos de interpolación disponibles (lineal, cúbica, vecino más cercano)
+
 ## Instalación
 
 ### Requisitos previos
@@ -33,14 +51,16 @@ Este plugin convierte archivos NetCDF del radar meteorológico RS120 a diferente
 El plugin requiere las siguientes dependencias de Python:
 
 ```bash
-pip install numpy xarray rasterio matplotlib pillow requests
+pip install numpy xarray rasterio matplotlib pillow requests scipy pykrige
 ```
 
 Para una instalación completa de todas las dependencias, ejecuta:
 
 ```bash
-pip install numpy xarray rasterio matplotlib pillow requests netCDF4 dask
+pip install numpy xarray rasterio matplotlib pillow requests scipy pykrige netCDF4 dask
 ```
+
+Si alguna dependencia no está instalada, el plugin mostrará un mensaje indicando qué paquetes faltan y cómo instalarlos.
 
 ### Instalación del plugin
 
@@ -71,6 +91,30 @@ pip install numpy xarray rasterio matplotlib pillow requests netCDF4 dask
 7. Selecciona la ubicación del archivo GIF de salida (opcional)
 8. Haz clic en "Ejecutar"
 
+### Series Temporales
+
+1. En el menú principal de QGIS, selecciona "Radar RS120" > "Radar Series Temporales"
+2. Selecciona la carpeta que contiene los archivos NetCDF
+3. Define la fecha de inicio y fin para el análisis
+4. Establece el intervalo en horas
+5. Selecciona la operación estadística (suma, media, máximo, mínimo)
+6. Ajusta el desplazamiento horario UTC (p.ej. -5 para Ecuador)
+7. Define el umbral para valores NoData
+8. Selecciona la carpeta de salida para los GeoTIFFs
+9. Haz clic en "Ejecutar"
+
+### Calibración a Precipitación
+
+1. En el menú principal de QGIS, selecciona "Radar RS120" > "Radar - Calibración a Precipitación"
+2. Selecciona la imagen de radar (reflectividad dBZ)
+3. Selecciona el Modelo Digital de Elevación (DEM)
+4. Selecciona la capa de estaciones meteorológicas
+5. Indica el campo de elevación y el campo de precipitación
+6. Selecciona el método de interpolación
+7. Define el valor NoData para precipitación
+8. Selecciona el archivo de salida para la precipitación calibrada
+9. Haz clic en "Ejecutar"
+
 ## Solución de problemas
 
 ### Errores comunes
@@ -78,6 +122,7 @@ pip install numpy xarray rasterio matplotlib pillow requests netCDF4 dask
 - **Error de reproyección**: El plugin intenta varios métodos de reproyección. Si todos fallan, se generará un archivo en coordenadas geográficas (WGS84).
 - **Error al cargar archivos NetCDF**: Asegúrate de que los archivos tengan un formato compatible con el radar RS120.
 - **Mapa base no disponible**: La descarga del mapa base requiere conexión a internet. Sin conexión, el plugin funcionará pero sin mapa base.
+- **Dependencias faltantes**: Si falta alguna biblioteca Python, el plugin mostrará un mensaje con instrucciones para instalarlas.
 
 ### Compatibilidad
 
@@ -94,6 +139,8 @@ radar_rs120_tools/
 ├── plugin.py
 ├── netcdf_to_geotiff_algorithm.py
 ├── netcdf_to_gif_algorithm.py
+├── netcdf_time_series_algorithm.py
+├── radar_calibration_algorithm.py
 ├── about_dialog.py
 ├── icon.png
 ├── metadata.txt
